@@ -26,30 +26,101 @@
         .container {
             width: 1200px;
             height: 600px;
-            background: url(./ff7/main.jpg) no-repeat center/cover;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+
         }
 
         .leftbox {
             width: 600px;
             height: 600px;
-            background: url(./ff7/ps4-ff7.png) no-repeat;
-            background-size: 30%;
-            background-position: 50% 25%;
+            background: url(./ff7/main.jpg) no-repeat center/cover;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
             align-items: center;
+            justify-content: center;
         }
 
-        .title {
-            color: white;
-            font-size: 3rem;
-            align-self: center;
+        .ps4 {
+            width: 150px;
+            height: 260px;
         }
 
-        .description {
+        .ps4Text::first-line {
             color: white;
+            font-size: 2rem;
+            /* !問題 為啥不能用 align-content */
+            text-align: center;
+        }
 
+        .ps4Text {
+            color: white;
+            text-align: center;
+            margin-left: 50px;
+            margin-right: 50px;
+        }
+
+        .rightbox {
+            width: 600px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rightbox1 {
+            width: 600px;
+            height: 300px;
+            background: gray;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .cloud {
+            width: 250px;
+            height: 250px;
+            align-self: flex-end
+        }
+
+        .cloudText::first-line {
+            color: black;
+            font-size: 2rem;
+        }
+
+        .cloudText {
+            color: black;
+            margin-left: 30px;
+        }
+
+        .rightbox2 {
+            width: 600px;
+            height: 300px;
+            background: black;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .tifa {
+            width: 250px;
+            height: 250px;
+            align-self: flex-end;
+        }
+
+        .tifaText::first-line {
+            color: white;
+            font-size: 2rem;
+            text-align: left;
+        }
+
+        .tifaText {
+            color: white;
+            text-align: center;
+            text-align: left;
+            margin-right: 15px;
+            position: absolute;
+            left: 35%;
         }
     </style>
 </head>
@@ -57,14 +128,24 @@
 <body>
     <div class="container">
         <div class="leftbox">
-            <p class="title">AVAILABLE NOW</p>
-            <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum temporibus laborum
-                magni assumenda
-                repellat debitis asperiores, voluptatibus eum possimus nostrum.</p>
+            <img class="ps4" src="./ff7/ps4-ff7.png">
+            <p class="ps4Text">AVAILABLE NOW<br>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo
+                saepe illo ratione voluptas hic unde, recusandae esse amet tempora quasi labore sunt alias est ut iste
+                praesentium nihil placeat quidem.</p>
         </div>
         <div class="rightbox">
-            <div class="rightbox1"></div>
-            <div class="rightbox2"></div>
+            <div class="rightbox1">
+                <p class="cloudText">Cloud<br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio sequi enim
+                    facilis, ullam a modi nihil perspiciatis distinctio soluta illo magni inventore amet atque.
+                    Voluptate fugit nemo laborum odio itaque.</p>
+                <img class="cloud" src="./ff7/cloud.png">
+            </div>
+            <div class="rightbox2">
+                <img class="tifa" src="./ff7/tifa.png">
+                <p class="tifaText">Tifa<br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa corrupti
+                    laborum vel ex earum id, consectetur quos quas accusamus, commodi ipsum suscipit ullam, fuga beatae
+                    dolorem doloremque quo? Ut, labore!</p>
+            </div>
         </div>
     </div>
 </body>
