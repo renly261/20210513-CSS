@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            border-bottom: 1px solid #000;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        h2,
+        h3,
+        p {
+            margin: 1rem 0;
+        }
+
+        hr {
+            height: 5px;
+            border: none;
+            margin: 3rem 0;
+        }
+
+        .container {
+            width: 1200px;
+            height: 300px;
+            border: 1px solid #000;
+            margin: 0 0 3rem 0;
+        }
+
+        .col {
+            background: #ffa;
+            margin: 10px;
+        }
+
+        /* 彈性盒(父元素)可設定的屬性------------------------------------ */
+        /* .d-flex 彈性盒的預設屬性 */
+        .d-flex {
+            display: flex;
+            /* 水平排列 */
+            flex-direction: row;
+            /* 不換行 */
+            flex-wrap: nowrap;
+            /* 主軸 */
+            justify-content: flex-start;
+            /* 次軸 */
+            align-items: stretch;
+        }
+
+        /* 主軸方向 */
+        .flex-direction {
+            /* row 左到右水平排列 column 上到下垂直排列
+            row-reverse 右到左水平排列 column-reverse 下到上垂直排列*/
+            flex-direction: row;
+        }
+
+        /* 設定彈向項目主軸對齊點的位置 */
+        .justify-content {
+            /* flex-start(預設) 對齊主軸 cross-start 點
+            flex-end 對齊主軸 cross-end 點
+            center 對齊主軸 center 點
+            space-around 每個彈性項目左右或上下各平均多一個間隔
+            space-between 每個彈性項目中間間隔相同 最左右或上下貼齊父元素
+            space-evenly 每個彈性項目左右或上下間隔相同*/
+            justify-content: space-between;
+        }
+
+        /* 設定彈性項目次軸對齊點的位置 */
+        /* align-items 一行也可以用 align-content 一定要有換行才能用*/
+        /* 跟主軸垂直的方向 例如主軸預設row(水平) 次軸就是垂直 */
+        .align-items {
+            /* stretch(預設) 拉長到滿版
+            flex-start 對齊次軸 cross-start 點
+            flex-end 對齊次軸 cross-end 點
+            center 對齊次軸 center 點
+            space-around 每個彈性項目左右或上下各平均多一個間隔
+            space-between 每個彈性項目中間間隔相同 最左右或上下貼齊父元素
+            space-evenly 每個彈性項目左右或上下間隔相同
+            baseline 對齊彈性細項目文字底部的 baseline */
+            align-items: flex-end;
+        }
+
+        /* 設定彈性項目換行與否 */
+        .flex-wrap {
+            /* nowrap(預設) 不換行 
+            若彈性項目很多且彈性項目強制設定大的寬高不會有作用 依然會自動調整寬高塞進父元素 */
+            /* wrap 換行 */
+            /* wrap-reverse 換行且反轉顯示 右到左 下到上 */
+            flex-wrap: nowrap;
+        }
+
+        .w0 {
+            width: 380px;
+        }
+
+        .h0 {
+            height: 130px;
+        }
+
+        /* flex-flow 主軸方向與換行與否合起來寫 */
+        .flex-flow {
+            flex-flow: row nowrap;
+        }
+
+        /* 彈性項目(子元素)可設定的屬性----------------------------------- */
+        /* 彈性項目可以再設定自己的次軸對齊 */
+        .align-self-start {
+            align-self: flex-start;
+        }
+
+        .align-self-center {
+            align-self: center;
+        }
+
+        .align-self-end {
+            align-self: flex-end;
+        }
+
+        .align-self-stretch {
+            align-self: flex-stretch;
+        }
+
+        .align-self-baseline {
+            align-self: baseline;
+        }
+
+        /* 父元素宣告為彈性盒 子元素成為彈性項目也會產生預設屬性 */
+        /* 彈性項目預設屬性
+        flex:grow:0; 彈性伸展係數
+        flex-shrink:1; 彈性收縮係數
+        flex-basis:auto; 彈性尺寸係數
+
+        可用 flex 簡寫 表示三合一屬性，可清楚表示三種屬性狀態，或使用文字 數字表示 *推薦*
+        flex:0 1 auto;
+         */
+        /* 彈性伸展係數 */
+        .flex-grow {
+            /* 把剩餘沒有被分配的空間分給彈性項目填滿 */
+            /* flex-grow: 1 把剩餘空間平均分給每個彈性項目 */
+            flex-grow: 1;
+        }
+
+        /* 
+        已知條件
+        margin  totoal:10px * 6 = 60px
+        彈性項目:width totoal 500px + 500px + 500px = 1500px
+        彈性盒 container width = 1200px
+        1500 + 60 > 1200 應該要爆滿 
+        但因為 flex-shrink 預設 1 會限縮超出的空間 360px 不會爆版
+
+        計算收縮的實際寬度
+        每個彈性項目 width:500px + (margin:10px * 2) = 520px
+        520px - (360/3)px = 400px
+        520px - (360/3)px = 400px
+        520px - (360/3)px = 400px
+         */
+        /* 彈性收縮技術 */
+        .flex-shrink {
+            flex-shrink: 1;
+        }
+
+        .w2 {
+            width: 500px;
+        }
+
+        /* 
+        auto 可以設定各彈性項目寬高 
+        flex-basis:0 設定各彈性寬高沒有作用
+        flex-basis:數字 flex-basis 有優先權 設定值會以 flex-basis 為主 
+        主軸水平(flex-direction:row) 寬度沒作用 高度有作用且設定值以 flex-basis 為主
+        主軸垂直(flex-direction:column) 高度沒作用 寬度有作用且設定值以 flex-basis 為主
+        */
+        /* 彈性尺寸係數 */
+        .flex-basis {
+            flex-basis: 15%;
+            width: 1000px;
+        }
+
+        /* 
+        flex:數字 flex:1 常用
+        flex: 0 => flex:0 1 0% 要注意和 flex:none 不同
+        flex: 1 => flex:1 1 0% 伸展不考慮 flex-shrink flex-basis 
+
+        flex:文字
+        flex:auto => flex:1 1 auto => flex-grow:1 三者相同 
+        flex:none => flex:0 0 auto
+        flex-initial => flex:0 1 auto => flex:grow:0 三者相同
+        */
+        /* 簡寫 推薦 */
+        .flex {
+            flex: 1;
+        }
+
+        /* 彈性項目順序 */
+        .order-1 {
+            order: 2;
+        }
+
+        .order-2 {
+            order: 3;
+        }
+
+        .order-3 {
+            order: 1;
+        }
+
+        .order-first {
+            /* 永遠排在第一個 */
+            order: -1;
+        }
+
+        .order-last {
+            /* 永遠排在最後一個 */
+            order: 彈性項目個數+1;
+        }
+
+        /* align-content 整個內容對齊次軸*/
+        .container2 {
+            width: 1200px;
+            height: 600px;
+            background: #000;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-content: center;
+        }
+
+        .col2 {
+            margin: 10px;
+            background: red;
+        }
+
+        .col2 img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>flexbox</h1>
+    <div>flexbox 設定分為兩部分:彈性盒(flex container)、彈性項目(flex items)</div>
+    <img src="./flexbox.png">
+
+    <h2>彈性盒設定</h2>
+    <h3>1.display:flex</h3>
+    <p>父元素宣告 display:flex 為彈性盒，子元素全部變成彈性項目(無論甚麼類型的盒子)</p>
+    <p>彈性盒(父)、彈性項目(子)各自擁有屬性設定</p>
+    <p>彈性盒預設屬性裡，不管多少彈性項目都不會換行，它會自行調整寬高來盡量塞進父元素裡，但是太多彈性項目由於沒有空間分配，還是會造成跑版</p>
+    <div class="container d-flex">
+        <div class="col">彈性項目 01</div>
+        <div class="col">彈性項目 02</div>
+        <div class="col">彈性項目 03</div>
+    </div>
+
+    <h3>2.彈性盒 flex-direction 的軸向，決定主軸是水平或垂直</h3>
+    <p>父元素宣告為彈性盒時，產生主軸與次軸對齊方式，主軸次軸可以是水平或垂直流向，要以彈性盒的 flex-direction 決定誰才是主軸</p>
+    <p>當 flex-direction:row 主軸水平流向排列</p>
+    <p>當 flex-direction:column 主軸垂直流向排列</p>
+    <p>justify-content 為主軸對齊屬性 align-items 為次軸對齊屬性</p>
+    <div class="container d-flex flex-direction">
+        <div class="col">彈性項目 01</div>
+        <div class="col">彈性項目 02</div>
+        <div class="col">彈性項目 03</div>
+    </div>
+
+    <h3>3.justify-content(主軸對齊屬性) 與 align-items(次軸對齊屬性)</h3>
+    <div class="container d-flex flex-direction justify-content align-items">
+        <div class="col">彈性項目 01</div>
+        <div class="col">彈性項目 02</div>
+        <div class="col">彈性項目 03</div>
+    </div>
+
+    <h3>4.flex-wrap，可設定彈性項目單行、多行(換行)顯示</h3>
+    <p>nowrap(預設)不換行 wrap(彈性盒總寬高超過彈性盒)換行 wrap-reverse 換行 右到左 下到上</p>
+    <div class="container d-flex flex-direction justify-content align-items flex-wrap">
+        <div class="col w0 h0">彈性項目 01</div>
+        <div class="col w0 h0">彈性項目 02</div>
+        <div class="col w0 h0">彈性項目 03</div>
+        <div class="col w0 h0">彈性項目 04</div>
+        <div class="col w0 h0">彈性項目 05</div>
+        <div class="col w0 h0">彈性項目 06</div>
+    </div>
+
+    <hr>
+    <hr>
+
+    <h2>彈性項目設定</h2>
+    <h3>1.align-self 各別設定彈性項目的次軸對齊</h3>
+    <div class="container d-flex">
+        <div class="col align-self-start">彈性項目 01</div>
+        <div class="col align-self-center">彈性項目 02</div>
+        <div class="col align-self-end">彈性項目 03</div>
+        <div class="col align-self-strecth">彈性項目 04</div>
+        <div class="col align-self-baseline" style="font-size:3rem;">彈性項目 05</div>
+        <div class="col align-self-baseline" style="font-size:1rem;">彈性項目 06</div>
+        <div class="col align-self-baseline" style="font-size:2rem;">彈性項目 07</div>
+    </div>
+
+    <h3>2.flex-grow 彈性伸展係數 預設0</h3>
+    <p>彈性伸展係數 將剩餘未分配的空間分配給彈性項目填滿</p>
+    <p>flex-grow:1 平均分配 例如三欄 flex-grow 設定 1 2 3 剩餘空間比例分配為 1/6 2/6 3/6</p>
+    <p>flex-grow:0 == flex:0 1 auto == flex:initial</p>
+    <p>flex-grow:1 == flex:1 1 auto == flex:auto</p>
+    <div class="container d-flex">
+        <div class="col flex-grow w1">彈性項目 01</div>
+        <div class="col flex-grow w1">彈性項目 02</div>
+        <div class="col flex-grow w1">彈性項目 03</div>
+    </div>
+
+    <h3>3.彈性收縮係數 預設1 防止所有彈性項目加起來的總寬度超過彈性盒產生爆版</h3>
+    <p>設定 flex-shrink:1 不會爆版 會將超出的寬度平均分給所有在彈性盒內的彈性項目</p>
+    <p>設定 flex-shrink:0 若彈性項目寬度 > 彈性盒 會爆版</p>
+    <div class="container d-flex">
+        <div class="col flex-shrink w2">彈性項目 01</div>
+        <div class="col flex-shrink w2">彈性項目 02</div>
+        <div class="col flex-shrink w2">彈性項目 03</div>
+    </div>
+
+    <h3>4.flex-basis</h3>
+    <p>flex-basis 是指主軸在 row column 排列時，彈性項目的基準尺寸</p>
+    <div class="container d-flex flex-direction">
+        <div class="col flex-basis">彈性項目 01</div>
+        <div class="col flex-basis">彈性項目 02</div>
+        <div class="col flex-basis">彈性項目 03</div>
+    </div>
+
+    <h3>5.flex:0 1 auto(預設)，一次設定 flex-grow flex-shrink flex-basis</h3>
+    <div class="container d-flex flex-direction">
+        <div class="col flex">彈性項目 01</div>
+        <div class="col flex">彈性項目 02</div>
+        <div class="col flex">彈性項目 03</div>
+    </div>
+
+    <h3>6.order 彈性項目順序</h3>
+    <p>order 可以調整彈性項目之間的順序，數值越大排在越後面</p>
+    <div class="container d-flex flex-direction">
+        <div class="col order-1">彈性項目 01</div>
+        <div class="col order-2">彈性項目 02</div>
+        <div class="col order-3">彈性項目 03</div>
+    </div>
+
+    <hr>
+
+    <h2>align-content 設定</h2>
+    <p>1.flex-wrap 必須要 wrap 才有作用</p>
+    <p>2.是宣告在彈性盒裡面的屬性</p>
+    <div class="container2">
+        <div class="col2">
+            <img src="https://picsum.photos/300/200/?random=1">
+        </div>
+        <div class="col2">
+            <img src="https://picsum.photos/300/200/?random=2">
+        </div>
+        <div class="col2">
+            <img src="https://picsum.photos/300/200/?random=3">
+        </div>
+        <div class="col2">
+            <img src="https://picsum.photos/300/200/?random=4">
+        </div>
+        <div class="col2">
+            <img src="https://picsum.photos/300/200/?random=5">
+        </div>
+        <div class="col2">
+            <img src="https://picsum.photos/300/200/?random=6">
+        </div>
+    </div>
+</body>
+
+</html>
